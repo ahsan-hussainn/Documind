@@ -1,0 +1,30 @@
+# API Framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+python-multipart==0.0.9        # file uploads
+
+# LLMs
+openai==1.51.0
+anthropic==0.34.0
+langchain==0.3.0
+langchain-openai==0.2.0
+langchain-anthropic==0.2.0
+langchain-community==0.3.0
+
+# Vector store & search
+faiss-cpu==1.8.0
+rank-bm25==0.2.2               # BM25 keyword search
+
+# Document parsing
+pymupdf==1.24.10                # PDF parsing (fitz)
+python-docx==1.1.2             # DOCX parsing
+
+# Database
+sqlalchemy==2.0.35
+psycopg2-binary==2.9.9
+alembic==1.13.3
+
+# Utilities
+pydantic-settings==2.5.2       # settings management
+python-dotenv==1.0.1
+numpy==1.26.4
