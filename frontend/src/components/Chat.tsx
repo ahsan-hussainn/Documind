@@ -1,6 +1,24 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { api } from "../lib/api";
 import type { Source } from "../lib/api";
+
+const ALL_SUGGESTIONS = [
+  "What is this document about?",
+  "Summarize the key points",
+  "What are the main conclusions?",
+  "List all important dates",
+  "What are the key recommendations?",
+  "Extract the main arguments",
+  "What data or statistics are mentioned?",
+  "Who are the key people or organizations?",
+  "What problems does this document address?",
+  "Compare the main viewpoints presented",
+];
+
+function pickRandom<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
 
 interface Message {
   role: "user" | "assistant";
@@ -17,6 +35,7 @@ export function Chat({ selectedDocIds }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const suggestions = useMemo(() => pickRandom(ALL_SUGGESTIONS, 4), []);
   const [conversationId, setConversationId] = useState<string>();
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -69,7 +88,7 @@ export function Chat({ selectedDocIds }: Props) {
               Upload a document from the sidebar and ask anything about it.
             </p>
             <div className="flex flex-wrap gap-2 justify-center max-w-xl">
-              {["What is this document about?", "Summarize the key points", "What are the main conclusions?", "List all important dates"].map((q) => (
+              {suggestions.map((q) => (
                 <button key={q} onClick={() => { setInput(q); inputRef.current?.focus(); }}
                   className="text-sm px-4 py-2 rounded-xl border border-surface-3 text-ink-muted hover:border-amber/40 hover:text-ink hover:bg-surface-2 transition-all">
                   {q}
@@ -180,11 +199,6 @@ export function Chat({ selectedDocIds }: Props) {
               className="flex-shrink-0 w-8 h-8 rounded-lg bg-amber disabled:bg-surface-4 disabled:text-ink-faint flex items-center justify-center text-sm transition-all hover:bg-amber-dim disabled:cursor-not-allowed font-bold"
             >↑</button>
           </div>
-          <p className="text-xs text-ink-faint mt-2 text-center">
-            {selectedDocIds.length > 0
-              ? `Searching ${selectedDocIds.length} selected document${selectedDocIds.length > 1 ? "s" : ""}`
-              : "Searching all documents"} · Enter to send
-          </p>
         </div>
       </div>
     </div>

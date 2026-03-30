@@ -136,14 +136,6 @@ export function Sidebar({ documents, onUploaded, onDeleted, selectedDocIds, onTo
         )}
       </div>
 
-      {/* Footer */}
-      <div className="px-4 py-3 border-t border-surface-3">
-        <p className="text-xs text-ink-faint">
-          {selectedDocIds.length === 0
-            ? "Searching all documents"
-            : `Searching ${selectedDocIds.length} selected`}
-        </p>
-      </div>
     </aside>
   );
 }
