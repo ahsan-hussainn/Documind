@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { Chat } from "./components/Chat";
-import { SourcesPanel } from "./components/SourcesPanel";
 import { api } from "./lib/api";
-import type { DocFile, Source } from "./lib/api";
+import type { DocFile } from "./lib/api";
 
 export default function App() {
   const [documents, setDocuments] = useState<DocFile[]>([]);
   const [selectedDocIds, setSelectedDocIds] = useState<string[]>([]);
-  const [activeSources, setActiveSources] = useState<Source[] | null>(null);
 
   useEffect(() => {
     api.listDocuments().then(setDocuments).catch(console.error);
@@ -28,7 +26,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen bg-surface overflow-hidden">
+    <div style={{ display: "flex", height: "100vh", width: "100vw", overflow: "hidden", background: "#141414" }}>
       <Sidebar
         documents={documents}
         onUploaded={handleUploaded}
@@ -36,16 +34,7 @@ export default function App() {
         selectedDocIds={selectedDocIds}
         onToggleDoc={handleToggleDoc}
       />
-      <Chat
-        selectedDocIds={selectedDocIds}
-        onSourcesClick={setActiveSources}
-      />
-      {activeSources && (
-        <SourcesPanel
-          sources={activeSources}
-          onClose={() => setActiveSources(null)}
-        />
-      )}
+      <Chat selectedDocIds={selectedDocIds} />
     </div>
   );
 }

@@ -29,7 +29,7 @@ User asks a question
 - **Fallback LLM**: Anthropic Claude (configurable via PRIMARY_LLM env var)
 - **FAISS over Pinecone**: Self-contained, no external service, easy to Docker-ize
 - **Source citations**: PyMuPDF extracts text page-by-page so every chunk knows its page number
-- **Streaming**: All chat endpoints use SSE for real-time response
+- **Response format**: Full JSON response with answer + source citations per request
 
 ## Project Structure
 

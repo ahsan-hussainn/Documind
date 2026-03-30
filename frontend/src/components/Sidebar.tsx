@@ -41,7 +41,7 @@ export function Sidebar({ documents, onUploaded, onDeleted, selectedDocIds, onTo
   };
 
   return (
-    <aside className="w-72 bg-surface-1 border-r border-surface-3 flex flex-col h-full">
+    <aside style={{ width: "260px", flexShrink: 0 }} className="bg-surface border-r border-surface-3 flex flex-col h-full overflow-hidden">
       {/* Logo */}
       <div className="px-6 py-5 border-b border-surface-3">
         <h1 className="font-display text-xl text-ink tracking-tight">

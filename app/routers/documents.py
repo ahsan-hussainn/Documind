@@ -49,6 +49,10 @@ async def upload_document(file: UploadFile = File(...), db: Session = Depends(ge
         chunk_count = build_index(doc_id, chunks)
         doc.chunk_count = chunk_count
         doc.status = "ready"
+    except ValueError as e:
+        doc.status = "failed"
+        db.commit()
+        raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
         doc.status = "failed"
         db.commit()

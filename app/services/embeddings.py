@@ -26,6 +26,12 @@ def build_index(document_id: str, chunks: list[Chunk]) -> int:
     Embed all chunks and save a FAISS index + metadata to disk.
     Returns the number of chunks indexed.
     """
+    if not chunks:
+        raise ValueError(
+            "No text could be extracted from this document. "
+            "It may be a scanned/image-based PDF. Only text-based PDFs, DOCX, and TXT files are supported."
+        )
+
     texts = [c.text for c in chunks]
     vectors = get_embeddings(texts)
 
