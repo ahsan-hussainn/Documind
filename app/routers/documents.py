@@ -19,7 +19,8 @@ ALLOWED_TYPES = {"pdf", "docx", "doc", "txt"}
 async def upload_document(file: UploadFile = File(...), db: Session = Depends(get_db)):
     ext = file.filename.rsplit(".", 1)[-1].lower()
     if ext not in ALLOWED_TYPES:
-        raise HTTPException(status_code=400, detail=f"Unsupported file type: {ext}. Allowed: {ALLOWED_TYPES}")
+        allowed = ", ".join(sorted(ALLOWED_TYPES))
+        raise HTTPException(status_code=400, detail=f"Unsupported file type: .{ext}. Allowed: {allowed}")
 
     max_bytes = settings.max_upload_size_mb * 1024 * 1024
     content = await file.read()

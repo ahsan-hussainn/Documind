@@ -14,14 +14,16 @@ export function Sidebar({ documents, onUploaded, onDeleted, selectedDocIds, onTo
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleFile = async (file: File) => {
     setUploading(true);
+    setError(null);
     try {
       const doc = await api.uploadDocument(file);
       onUploaded(doc);
-    } catch (e) {
-      alert("Upload failed: " + e);
+    } catch (e: any) {
+      setError(e.message || "Upload failed");
     } finally {
       setUploading(false);
     }
@@ -85,6 +87,12 @@ export function Sidebar({ documents, onUploaded, onDeleted, selectedDocIds, onTo
             </>
           )}
         </div>
+        {error && (
+          <div className="mt-2 flex items-start gap-2 text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">
+            <span className="flex-1">{error}</span>
+            <button onClick={() => setError(null)} className="text-red-400/60 hover:text-red-400">✕</button>
+          </div>
+        )}
       </div>
 
       {/* Document list */}

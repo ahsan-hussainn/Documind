@@ -22,18 +22,27 @@ export interface ChatResponse {
   conversation_id: string;
 }
 
+async function parseError(res: Response): Promise<string> {
+  try {
+    const body = await res.json();
+    return body.detail || JSON.stringify(body);
+  } catch {
+    return res.statusText || "Request failed";
+  }
+}
+
 export const api = {
   async uploadDocument(file: File): Promise<DocFile> {
     const form = new FormData();
     form.append("file", file);
     const res = await fetch(`${BASE}/documents/upload`, { method: "POST", body: form });
-    if (!res.ok) throw new Error(await res.text());
+    if (!res.ok) throw new Error(await parseError(res));
     return res.json();
   },
 
   async listDocuments(): Promise<DocFile[]> {
     const res = await fetch(`${BASE}/documents/`);
-    if (!res.ok) throw new Error(await res.text());
+    if (!res.ok) throw new Error(await parseError(res));
     return res.json();
   },
 
@@ -47,7 +56,7 @@ export const api = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question, conversation_id: conversationId, document_ids: documentIds }),
     });
-    if (!res.ok) throw new Error(await res.text());
+    if (!res.ok) throw new Error(await parseError(res));
     return res.json();
   },
 };
