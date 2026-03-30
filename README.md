@@ -4,7 +4,8 @@
 
 Upload PDF, DOCX, or TXT files and ask questions in natural language. DocuMind retrieves the most relevant passages using hybrid search (semantic + keyword) and generates answers with exact page-level citations.
 
-<!-- Add a screenshot: ![DocuMind UI](docs/screenshot.png) -->
+<img width="959" height="436" alt="image" src="https://github.com/user-attachments/assets/4f4f5ada-0e16-44a4-afd8-dfae217e0ab0" />
+
 
 ## Features
 
@@ -15,6 +16,8 @@ Upload PDF, DOCX, or TXT files and ask questions in natural language. DocuMind r
 - **Conversation memory** — multi-turn Q&A with context from previous messages
 - **LLM fallback** — OpenAI (primary) with Anthropic Claude as a configurable fallback
 - **Dockerized** — one command to run the full stack with PostgreSQL
+
+<img width="959" height="434" alt="image" src="https://github.com/user-attachments/assets/7f7266c9-9088-4727-98a7-d052d945d180" />
 
 ## Tech Stack
 
